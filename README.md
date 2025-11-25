@@ -1,4 +1,4 @@
-**Overview**
+**Overview****
 - **Repo:** eBPF assignment problems.
 - **Location:** `problem-1/` and `problem-2/`.
 
@@ -21,6 +21,8 @@ Quick test (minimal):
     - `sudo ./tcp_drop_user <server-ip-or-iface> 4040`
     - Example using an interface name: `sudo ./tcp_drop_user enp0s3 4040`
   - If you're testing across VM/host, run `hostname -I` inside the VM to get its IP address and use that from the host to send traffic so the XDP program sees packets on the interface.
+
+![Problem 1 output](./problem1.jpg)
 
 - Test:
   - Run a TCP server: `python3 -m http.server 4040`
@@ -45,6 +47,8 @@ Quick test (minimal):
 - Test:
   - Start a server on allowed port: `python3 problem-2/tcp_server.py 4040`
   - Run your client inside the cgroup: `./myprocess <server-ip> 4040`
+
+![Problem 2 output](./problem2.png)
 
 - Detach / cleanup:
   - Detach pinned program from cgroup: `sudo bpftool cgroup detach /sys/fs/cgroup/mygrp cgroup_inet4_connect all`
