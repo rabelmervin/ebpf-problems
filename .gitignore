@@ -1,0 +1,3 @@
+# Ignore compiled objects and build artifacts
+*.o
+*.bpf.o
