@@ -2,12 +2,14 @@ CLANG ?= clang
 BPFTOOL ?= bpftool
 
 ARCH := $(shell uname -m | sed 's/x86_64/x86/')
-BPF_HEADERS := /usr/include
+
+# include common user and kernel headers 
+BPF_INCLUDES := -I/usr/include -I/usr/include/$(shell dpkg-architecture -qDEB_HOST_MULTIARCH) -I/usr/src/linux-headers-$(shell uname -r)/include
 
 all: filter_traffic.bpf.o
 
 filter_traffic.bpf.o: filter_traffic.bpf.c
-	$(CLANG) -O2 -target bpf -D__TARGET_ARCH_$(ARCH) -I$(BPF_HEADERS) -c $< -o $@
+	$(CLANG) -O2 -target bpf -D__TARGET_ARCH_$(ARCH) $(BPF_INCLUDES) -c $< -o $@
 
 clean:
 	rm -f *.o
